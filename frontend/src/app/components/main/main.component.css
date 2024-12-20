@@ -1,0 +1,147 @@
+
+.game-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a, #3a3a3a);
+    color: #fff;
+    font-family: sans-serif; 
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .btn-favourite {
+    background-color: #ff5722; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-favourite:hover {
+    background-color: #e64a19; 
+  }
+
+  .image-slider {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    border-right: 5px solid #ff5722;
+    padding: 20px;
+  }
+  
+  .game-image {
+    max-width: 100%;
+    max-height: 90%;
+    border: 3px solid #ff5722;
+    box-shadow: 0 0 20px rgba(255, 87, 34, 0.8);
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .image-slider:hover .game-image {
+    transform: scale(1.05); 
+  }
+  
+
+  .game-details {
+    flex: 1;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.8);
+    height: 90%;
+    overflow-y: auto;
+    border-left: 5px solid #ff5722;
+  }
+  
+  .game-title {
+    font-size: 2.5rem;
+    color: #ff5722;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 87, 34, 0.8);
+  }
+  
+  .game-release,
+  .game-genres,
+  .game-platforms,
+  .game-rating,
+  .game-playtime {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .game-description {
+    font-family: 'Press Start 2P', cursive; 
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  
+  .game-stores h3 {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    color: #ff5722;
+  }
+  
+  .game-stores ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .game-stores li {
+    margin: 5px 0;
+  }
+  
+  .game-stores a {
+    text-decoration: none;
+    color: #00e676;
+    transition: color 0.3s ease;
+  }
+  
+  .game-stores a:hover {
+    color: #76ff03;
+  }
+  
+  
+  .back-home-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 87, 34, 0.8);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: sans-serif;
+    text-transform: uppercase;
+  }
+  
+  .back-home-button:hover {
+    background-color: #ff7043;
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(255, 87, 34, 1);
+  }
+  
+  .back-home-button:active {
+    transform: translateY(2px);
+  }
+
+  .store-logo {
+    width: 70px; 
+    height: auto; 
+    margin-right: 10px; 
+    vertical-align: middle; 
+  }
+  

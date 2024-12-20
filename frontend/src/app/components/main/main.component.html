@@ -1,0 +1,39 @@
+<div class="game-container" *ngIf="game">
+    <div class="image-slider">
+      <img [src]="currentImage" alt="{{ game.name }}" class="game-image" />
+    </div>
+  
+    <div class="game-details">
+      <h1 class="game-title">{{ game.name }}</h1>
+      <p class="game-release">Release Year: {{ game.releaseYear }}</p>
+      <p class="game-genres">Genres: {{ game.genres.join(', ') }}</p>
+      <p class="game-platforms">Platforms: {{ game.platforms.join(', ') }}</p>
+      <p class="game-rating">
+        Rating: {{ game.rating }} ({{ game.ratingsCount }} reviews)
+      </p>
+      <p class="game-playtime">Average Playtime: {{ game.playtime }} hours</p>
+     
+
+      <div class="game-stores">
+        <h3>Available On:</h3>
+        <ul>
+          <li *ngFor="let store of game?.stores">
+            <a [href]="getStoreUrl(store.name)" target="_blank">
+              <img
+                [src]="'assets/images/' + getLogoFileName(store.name)"
+                [alt]="store.name"
+                class="store-logo"
+              />
+            </a>
+          </li>
+        </ul>
+      </div>
+  
+
+      <button class="btn-favourite" (click)="addToFavourites()">
+        Add to Favourites
+      </button>
+    
+    <button class="back-home-button" (click)="goHome()">Back to Home</button>
+  </div>
+  

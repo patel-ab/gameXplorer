@@ -1,0 +1,27 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Best Price Buy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header *ngIf="router.url == '/login' || router.url == '/signup'">
+    <div class="top-bar"></div>
+    <nav class="navbar">
+      <h1 class="site-title">Find Best Games</h1>
+      <ul class="nav-links">
+        <li><a routerLink="/login" routerLinkActive=" active">Login</a></li>
+        <li><a routerLink="/signup" routerLinkActive=" active">Signup</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="content">
+      <p>Welcome to the Gaming World</p>
+    </section>
+  </main>
+</body>
+
+<div class="container pt-1" >
+  <router-outlet></router-outlet>
+</div>
