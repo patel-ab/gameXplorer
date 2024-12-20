@@ -1,8 +1,9 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from gameXplorer.models import User
+from gameXplorer.models import Favourite, User
 from .serializers import FavouriteSerializer, LoginSerializer, SignupSerializer
 
 
@@ -51,3 +52,17 @@ def favourite_view(request):
         serializer.save()
         return Response({"message": "Added to favourite successfully!: message from backend"}, status=201)
     return Response(serializer.errors, status=400)
+
+@api_view(['GET'])
+def fetchScreenshots(request, user_id = None):
+     
+    if user_id:
+        favourites = Favourite.objects.filter(userId=user_id)
+    screenshots = []
+    for favourite in favourites:
+        screenshots.extend(favourite.game_screenshots)
+
+    return JsonResponse({"userId": user_id, "screenshots": screenshots})
+
+
+     

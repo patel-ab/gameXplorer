@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { Game } from '../../model/class/Game';
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,9 @@ export class HomeComponent implements OnInit {
   receivedObj: any;
   gameResults: any[] = [];
   finalResult: any[] = [];
+
+  screenshots: any[] = [];
+
   private apiKey = environment.apiKey;
   private baseUrl = environment.baseUrl;
 
@@ -37,6 +40,14 @@ export class HomeComponent implements OnInit {
   //   } else {
   //     console.log('No gameObj found in the state');
   //   }
+
+  this.fetchScreenShot(this.currentName)
+
+
+
+
+
+  
    }
 
   onSignOut() {
@@ -82,4 +93,16 @@ export class HomeComponent implements OnInit {
 
     return topResults.map((gameData) => new Game(gameData));
   }
+
+fetchScreenShot(user_id: string){
+  this.http.get(`http://127.0.0.1:8000/fetch_screenshots/${user_id}/`).subscribe({
+    next: (response: any) => {
+      this.screenshots = response.screenshots;  
+      console.log('Data received from backend', response);
+    },
+    error: (error) => {
+      console.log('Error occurred:', error);
+    }
+  });
+}
 }
