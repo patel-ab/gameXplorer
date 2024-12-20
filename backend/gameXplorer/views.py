@@ -3,13 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from gameXplorer.models import User
-from .serializers import LoginSerializer, SignupSerializer
-
-
-
-
-
-currentId = None
+from .serializers import FavouriteSerializer, LoginSerializer, SignupSerializer
 
 
 @api_view(['POST'])
@@ -39,7 +33,7 @@ def login_view(request):
             userObj = User.objects.get(userId=newId)
 
             if (userObj.password == newPwd):
-                currentId = newId
+
                 return Response({"message": "Login Successful"}, status=200)
             
             else:
@@ -52,4 +46,8 @@ def login_view(request):
 
 @api_view(['POST'])
 def favourite_view(request):
-    pass
+    serializer = FavouriteSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"message": "Added to favourite successfully!: message from backend"}, status=201)
+    return Response(serializer.errors, status=400)

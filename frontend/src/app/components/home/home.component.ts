@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Game } from '../../model/class/Game';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-home',
@@ -14,14 +15,29 @@ import { environment } from '../../../environments/environment';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   searchName = '';
+  currentName = '';
+  receivedObj: any;
   gameResults: any[] = [];
   finalResult: any[] = [];
   private apiKey = environment.apiKey;
   private baseUrl = environment.baseUrl;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, private sharedService: SharedService) {}
+  ngOnInit(): void {
+    this.currentName = this.sharedService.currentName;
+    console.log("Inside home component - Name = ", this.currentName);
+  //   const state = history.state;
+  //   if (state?.data) {
+  //     this.receivedObj = state.data;
+  //     console.log('Received Game Object:', this.receivedObj);
+  //     this.currentName = this.receivedObj.userId;
+  //     console.log('Received User Name :', this.currentName);
+  //   } else {
+  //     console.log('No gameObj found in the state');
+  //   }
+   }
 
   onSignOut() {
     const isSignOut = confirm('Do you want to sign out');

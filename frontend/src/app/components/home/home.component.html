@@ -22,11 +22,13 @@
             *ngFor="let game of finalResult"
           >
             <img [src]="game.backgroundImage" alt="{{ game.name }}" class="game-cover" />
-            <a [routerLink]="['/main']"  [state]="{ gameObj: game }">{{ game.name }}</a>
+            <a [routerLink]="['/main']"  [state]="{ gameObj: game, userName: currentName }">{{ game.name }}</a>
             <p class="game-info">Available on: {{ game.platforms.join(', ') }}</p>
             <p class="game-info">Release Year: {{ game.releaseYear }}</p>
             <p class="game-info">Genres: {{ game.genres.join(', ') }}</p>
             <p class="game-info">Rating: {{ game.rating }} ({{ game.ratingsCount }} reviews)</p>
           </div>
         </div>
+
+        <button class="sign-out-btn" (click)="onSignOut()">Sign Out</button>
       </body>

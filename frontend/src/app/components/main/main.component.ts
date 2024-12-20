@@ -8,20 +8,20 @@ import {
 import { Game } from '../../model/class/Game';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
 export class MainComponent implements OnInit {
-
-
   game: Game | null = null;
   currentImage: string = '';
   imageIndex: number = 0;
-
+  currentName = '';
 
   imageMapping: Record<string, string> = {
     steam: 'steam.png',
@@ -48,16 +48,24 @@ export class MainComponent implements OnInit {
     itchio: environment.itchio,
     epicgames: environment.EpicGames,
   };
-  
 
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private http: HttpClient,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
     const state = history.state;
+    this.currentName = this.sharedService.currentName;
+    console.log("Inside main component - Name = ", this.currentName);
+
+    // if (state?.userName) {
+    //   this.currentName = state.userName;
+    //   console.log('Received User Name', this.currentName);
+    // }
     if (state?.gameObj) {
       this.game = state.gameObj;
       console.log('Received Game Object:', this.game);
@@ -81,36 +89,47 @@ export class MainComponent implements OnInit {
         this.imageIndex = (this.imageIndex + 1) % this.game.screenshots.length; // Cycle through images
         this.currentImage = this.game.screenshots[this.imageIndex];
       }
-    }, 3000); 
+    }, 3000);
   }
 
   goHome() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home'], { state: { currentName: this.currentName } });
   }
 
   getLogoFileName(storeName: string): string {
     const formattedStoreName = storeName
-    .toLowerCase() 
-    .replace(/\s+/g, '') 
-    .replace(/[^a-z0-9]/g, '');
-  
-    return this.imageMapping[formattedStoreName] || 'white.jpeg'; 
-  }
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/[^a-z0-9]/g, '');
 
+    return this.imageMapping[formattedStoreName] || 'white.jpeg';
+  }
 
   getStoreUrl(storeName: string) {
     const formattedStoreName = storeName
-    .toLowerCase() 
-    .replace(/\s+/g, '') 
-    .replace(/[^a-z0-9]/g, '');
-  
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/[^a-z0-9]/g, '');
+
     return this.urlMapping[formattedStoreName] || '/home';
-    }
+  }
 
-
-    addToFavourites() {
-      throw new Error('Method not implemented.');
-      }
-
-
+  addToFavourites() {
+    const payload = {
+      userId: this.currentName,
+      game_id: this.game?.id,
+      game_name: this.game?.name,
+      game_screenshots: this.game?.screenshots,
+    };
+    console.log('Sending payload', payload);
+    this.http.post('http://127.0.0.1:8000/api/favourite/', payload).subscribe({
+      next: (response: any) => {
+        console.log('Successfully sent to backend', response);
+        alert("Added to favourites");
+      },
+      error: (error) => {
+        console.error('Error sending to backed', error.message);
+      },
+    });
+  }
 }
