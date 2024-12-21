@@ -129,6 +129,7 @@ export class MainComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error sending to backed', error.message);
+        alert(error.error.message);
       },
     });
   }

@@ -21,34 +21,44 @@ export class HomeComponent implements OnInit {
   receivedObj: any;
   gameResults: any[] = [];
   finalResult: any[] = [];
-
-  screenshots: any[] = [];
+  currentImages: string[] = [];
+  screenshots: string[] = [];
+  imageIndex = 0;
+  currentBackgroundImage: string = '';
 
   private apiKey = environment.apiKey;
   private baseUrl = environment.baseUrl;
 
-  constructor(private router: Router, private http: HttpClient, private sharedService: SharedService) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private sharedService: SharedService
+  ) {}
   ngOnInit(): void {
     this.currentName = this.sharedService.currentName;
-    console.log("Inside home component - Name = ", this.currentName);
-  //   const state = history.state;
-  //   if (state?.data) {
-  //     this.receivedObj = state.data;
-  //     console.log('Received Game Object:', this.receivedObj);
-  //     this.currentName = this.receivedObj.userId;
-  //     console.log('Received User Name :', this.currentName);
-  //   } else {
-  //     console.log('No gameObj found in the state');
-  //   }
+    console.log('Inside home component - Name = ', this.currentName);
+    this.fetchScreenShot(this.currentName);
+  }
 
-  this.fetchScreenShot(this.currentName)
+  startImageSlider(): void {
+    this.updateImages();
+    setInterval(() => {
+      this.updateImages();
+    }, 3000);
+  }
+  updateImages(): void {
+    if (this.screenshots.length > 0) {
+      const currentIndex = this.imageIndex % this.screenshots.length;
+      this.currentBackgroundImage = `url('${this.screenshots[currentIndex]}')`;
+      // Update for the next image
+      this.imageIndex = (this.imageIndex + 1) % this.screenshots.length;
+    }
+  }
 
-
-
-
-
-  
-   }
+  areScreenshotsAvailable(): boolean {
+    console.log("Length is", this.screenshots.length)
+    return this.screenshots.length > 0;
+  }
 
   onSignOut() {
     const isSignOut = confirm('Do you want to sign out');
@@ -94,15 +104,20 @@ export class HomeComponent implements OnInit {
     return topResults.map((gameData) => new Game(gameData));
   }
 
-fetchScreenShot(user_id: string){
-  this.http.get(`http://127.0.0.1:8000/fetch_screenshots/${user_id}/`).subscribe({
-    next: (response: any) => {
-      this.screenshots = response.screenshots;  
-      console.log('Data received from backend', response);
-    },
-    error: (error) => {
-      console.log('Error occurred:', error);
-    }
-  });
-}
+  fetchScreenShot(user_id: string) {
+    this.http
+      .get(`http://127.0.0.1:8000/fetch_screenshots/${user_id}/`)
+      .subscribe({
+        next: (response: any) => {
+          this.screenshots = response.screenshots;
+          console.log('Data received from backend', response);
+          if (this.screenshots.length > 0) {
+            this.startImageSlider();
+          }
+        },
+        error: (error) => {
+          console.log('Error occurred:', error);
+        },
+      });
+  }
 }

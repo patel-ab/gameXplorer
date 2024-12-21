@@ -49,6 +49,10 @@ def login_view(request):
 def favourite_view(request):
     serializer = FavouriteSerializer(data=request.data)
     if serializer.is_valid():
+        gameId = request.data.get("game_id")
+        if Favourite.objects.filter(game_id = gameId).exists():
+             return Response({"message": "Game is already added to favourites"}, status=409)
+
         serializer.save()
         return Response({"message": "Added to favourite successfully!: message from backend"}, status=201)
     return Response(serializer.errors, status=400)
