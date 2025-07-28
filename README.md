@@ -8,7 +8,6 @@
 - **Favorites Management**: Add and manage your favorite games in a personalized list.
 - **Dynamic Display**: Dynamically display game details using an image slider and visually engaging elements.
 - **Login & Signup**: Secure user authentication with the ability to save user-specific preferences and data.
-- **Responsive Design**: Optimized for both desktop and mobile viewing.
 
 ---
 
@@ -21,6 +20,13 @@
 - **Angular Router**: Manages routing between different pages (e.g., Login, Home, Game Details).
 
 ### Backend
+- Spring Boot (Java 17)
+- RESTful APIs with Spring MVC
+- MySQL
+- JPA/Hibernate
+- Jackson for JSON parsing
+
+### Backend-2
 - **Django**: Provides a robust framework for managing API endpoints and database interactions.
 - **Django REST Framework (DRF)**: Used for creating RESTful APIs.
 - **SQLite**: The default lightweight database for development.
@@ -55,22 +61,28 @@
    ```
    The application will be available at `http://localhost:4200`.
 
-### Backend Setup
-1. Navigate to the `backend` folder:
-   ```bash
-   cd backend
-   ```
-2. Install dependencies:
-   ```bash
-   pip install django djangorestframework
-   pip install django-cors-headers
-   ```
-3. Apply migrations and run the server:
-   ```bash
-   python manage.py migrate
-   python manage.py runserver
-   ```
-   The server will be available at `http://127.0.0.1:8000`.
+### Backend (Spring Boot)
+
+```bash
+cd backend
+```
+
+1. Update `application.properties`:
+
+```properties
+spring.datasource.url=URL
+spring.datasource.username=YOUR_DB_USERNAME
+spring.datasource.password=YOUR_DB_PASSWORD
+spring.jpa.hibernate.ddl-auto=update
+```
+
+2. Start the backend:
+
+```bash
+./mvnw spring-boot:run
+```
+
+Server: `http://localhost:8080`
 
 ---
 
@@ -109,6 +121,14 @@ frontend/
 ```
 
 ### Backend
+```
+├── backend-springboot/    # Spring Boot app
+│   ├── controller/        # REST Controllers
+│   ├── entity/            # JPA Entities
+│   ├── repository/        # Repositories (CRUD)
+│   └── application.properties
+```
+### Backend-2
 ```
 backend/
 ├── api/
