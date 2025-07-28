@@ -119,10 +119,10 @@ export class MainComponent implements OnInit {
       userId: this.currentName,
       game_id: this.game?.id,
       game_name: this.game?.name,
-      game_screenshots: this.game?.screenshots,
+      gameScreenshots: JSON.stringify(this.game?.screenshots)
     };
     console.log('Sending payload', payload);
-    this.http.post('http://127.0.0.1:8000/api/favourite/', payload).subscribe({
+    this.http.post(`${environment.apiUrl}/api/favourites`, payload).subscribe({
       next: (response: any) => {
         console.log('Successfully sent to backend', response);
         alert("Added to favourites");

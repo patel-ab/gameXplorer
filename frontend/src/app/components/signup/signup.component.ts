@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../model/class/User';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -30,8 +31,7 @@ export class SignupComponent {
   
   onSubmit() {
     if (this.verifyPassword()) {
-      this.http
-        .post('http://127.0.0.1:8000/api/signup/', this.userObj)
+     this.http.post(`${environment.apiUrl}/api/users`, this.userObj)
         .subscribe({
           next: (response: any) => {
             console.log('Form submitted successfully:', response);

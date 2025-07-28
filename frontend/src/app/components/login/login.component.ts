@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class LoginComponent {
 
   verifyLogin() {
     console.log('Sending Data', this.data);
-    this.http.post('http://127.0.0.1:8000/api/login/', this.data).subscribe({
+    this.http.post(`${environment.apiUrl}/api/users/login`, this.data).subscribe({
       next: (response: any) => {
         console.log('Login Successful', response);
         alert('Login Successful');

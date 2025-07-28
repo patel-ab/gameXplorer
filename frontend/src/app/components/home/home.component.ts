@@ -106,10 +106,10 @@ export class HomeComponent implements OnInit {
 
   fetchScreenShot(user_id: string) {
     this.http
-      .get(`http://127.0.0.1:8000/fetch_screenshots/${user_id}/`)
+      .get(`${environment.apiUrl}/api/favourites/screenshots/user/${user_id}`)
       .subscribe({
         next: (response: any) => {
-          this.screenshots = response.screenshots;
+          this.screenshots = response;
           console.log('Data received from backend', response);
           if (this.screenshots.length > 0) {
             this.startImageSlider();
