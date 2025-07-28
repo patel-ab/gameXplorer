@@ -64,7 +64,7 @@
 ### Backend (Spring Boot)
 
 ```bash
-cd backend
+cd backend-springboot
 ```
 
 1. Update `application.properties`:
