@@ -1,4 +1,4 @@
-# GameXplorer 🎮
+# GameXplorer
 
 **GameXplorer** is a comprehensive web application that enables users to explore video games, view detailed information, and manage their favorite games. The project integrates Angular for the frontend and Django for the backend to provide a seamless user experience and efficient data management.
 
